@@ -1,0 +1,9 @@
+docker-compose up
+docker run --name mysql-container --network kafka-net -e MYSQL_ROOT_PASSWORD=1234 -d -p 3306:3306 mysql:5.7
+docker ecex -it mysql-container bash
+mysql -uroot -p1234
+create database offer_db;
+docker build -t consumerimage .
+docker build -t producerimage .
+docker run --name customer -p 8081:8081 --network kafka-net consumerimage
+docker run --name marketer -p 8080:8080 --network kafka-net producerimage
